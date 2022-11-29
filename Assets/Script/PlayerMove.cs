@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    float speed = 0.5f;
+    float speed = 0.05f;
 
     void Start()
     {
@@ -38,6 +38,13 @@ public class PlayerMove : MonoBehaviour
         {
             //‰º•ûŒü‚É+0.1“®‚­
             pos.z += speed;
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                pos.y += 1.0f;
+            }
         }
 
         transform.position = new Vector3(pos.x,pos.y,pos.z);
