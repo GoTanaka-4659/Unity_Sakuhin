@@ -2,16 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Apple : MonoBehaviour
+public class Poison : MonoBehaviour
 {
+    public Player player;
     public GameManager gameManager;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            gameManager.AddAppleCount();
-            Destroy(gameObject);
+            player.Hp -= 1;
+            gameManager.SubHp();
+            Debug.Log("PosionHit");
         }
     }
 
