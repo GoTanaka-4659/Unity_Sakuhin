@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     {
         if (Hp == 0)
         {
-            Destroy(this.gameObject);
+           // Destroy(this.gameObject);
         }
         
     }
