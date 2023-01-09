@@ -10,6 +10,10 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody rb;
     public bool isJumpFlag = false;
 
+    public float Mx = 0f;
+    public float My = 0f;
+    public float Mz = 0f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -72,16 +76,6 @@ public class PlayerMove : MonoBehaviour
             pos.x += speed;
         }
 
-
-        //if (Input.GetKeyDown(KeyCode.Space)&&isJumpFlag==false)
-        //{
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        pos.y += 1.0f;
-        // isJumpFlag = true;
-        //    }
-        //}
-
         //スペースを押した時ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && isJumpFlag == false)
         {
@@ -92,16 +86,32 @@ public class PlayerMove : MonoBehaviour
         transform.position = new Vector3(pos.x, pos.y, pos.z);
     }
 
-    //床と接しているときジャンプフラグfalse
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Floor"|| other.gameObject.tag == "Block" || other.gameObject.tag == "BrakeBlock")
+        //床と接しているときジャンプフラグfalse
+        if (other.gameObject.tag == "Floor" || other.gameObject.tag == "Block" || other.gameObject.tag == "BrakeBlock")
         {
             isJumpFlag = false;
             Debug.Log("aaaa");
         }
         Debug.Log(other.gameObject.tag);
+
+        Vector3 pos = transform.position;
+
+        if (other.gameObject.tag == "Block"||other.gameObject.tag=="BrakeBlock")
+        {
+            pos.x -= Mx;
+        }
+        if(other.gameObject.tag == "Wall")
+        {
+
+            pos.x -= 0.5f;
+            pos.z -= Mz;
+        }
+        
+        transform.position = new Vector3(pos.x, pos.y, pos.z);
     }
+
 }
 
 
