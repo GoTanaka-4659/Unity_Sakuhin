@@ -6,10 +6,12 @@ public class Apple : MonoBehaviour
 {
     public GameManager gameManager;
 
+    //プレイヤーとリンゴが接触したとき
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
+            //カウント増加&リンゴオブジェクトの破壊
             gameManager.AddAppleCount();
             Destroy(gameObject);
         }
@@ -17,6 +19,7 @@ public class Apple : MonoBehaviour
 
     private void Start()
     {
+        //ゲームマネージャーの取得
         GameObject managerObject = GameObject.Find("GameManager");
         gameManager = managerObject.GetComponent<GameManager>();
     }

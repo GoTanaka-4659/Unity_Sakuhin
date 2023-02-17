@@ -16,46 +16,206 @@ public class GameManager : MonoBehaviour
         //Application.targetFrameRate = 60;
         appleCount = 0;
         Hpcount = 3;
+        brakeCount = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        //Escが押された時ゲームプレイ終了
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
     Application.Quit();//ゲームプレイ終了
 #endif
         }
 
-
+        //プレイヤーが死んだときゲームオーバー画面に移動
         if (player.Hp <= 0)
         {
             ChanegeScene();
         }
+        
+        //リンゴが100個集まった時に残機を1増やす
+        if(appleCount==100)
+        {
+            appleCount = 0;
+            player.AddRemainingLives();
+        }
     }
 
+    //壊せるブロックのカウント
+    public Text textBrakeBlock;
+    private int brakeCount;
 
+    /// <summary>
+    /// 壊せるブロックを増やす
+    /// </summary>
+    public void BrakeBlockCount()
+    {
+        brakeCount += 1;
+        textBrakeBlock.text = "x" + brakeCount+ "/17";
+    }
+
+    //リンゴのカウント
     public Text textComponent;
     private int appleCount;
 
+    /// <summary>
+    /// リンゴを増やす
+    /// </summary>
     public void AddAppleCount()
     {
         appleCount += 1;
-        textComponent.text = "AppleCount : " + appleCount;
+        textComponent.text = "x" + appleCount;
     }
 
+    //HPのカウント
     public Text Hptext;
     private int Hpcount;
 
+    /// <summary>
+    /// HPを減らす
+    /// </summary>
     public void SubHp()
     {
         Hpcount -= 1;
-        Hptext.text = "Hp" + Hpcount;
+        Hptext.text = "x" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" +
+            "" + Hpcount;
      }
 
+    //シーン切り替え（ゲームオーバー）
     public void ChanegeScene()
     {
         SceneManager.LoadScene(GameOverScene);

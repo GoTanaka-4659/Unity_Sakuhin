@@ -8,10 +8,13 @@ public class Field : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //プレイヤーが場外に落ちたときに殺す
         if (other.gameObject.tag == "Player")
         {
+            //プレイヤーのHPを0にする
             player.Hp -= player.Hp;
 
+            //デバッグ用
             Debug.Log("OutStage");
         }
     }

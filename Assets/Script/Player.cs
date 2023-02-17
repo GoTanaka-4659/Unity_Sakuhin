@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //毒などに当たって減るヒットポイント
     public int Hp = 3;
+    //残機
+    public int remainingLives = 1;
 
     void Update()
     {
@@ -13,5 +16,13 @@ public class Player : MonoBehaviour
            // Destroy(this.gameObject);
         }
         
+    }
+
+    /// <summary>
+    /// 残機追加
+    /// </summary>
+    public void AddRemainingLives()
+    {
+        remainingLives += 1;
     }
 }

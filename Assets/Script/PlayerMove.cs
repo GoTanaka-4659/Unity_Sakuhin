@@ -9,6 +9,8 @@ public class PlayerMove : MonoBehaviour
     public float garavity;
     private Rigidbody rb;
     public bool isJumpFlag = false;
+    public bool isJumpFlagTwice = false;
+
 
     public float Mx = 0f;
     public float My = 0f;
@@ -24,7 +26,7 @@ public class PlayerMove : MonoBehaviour
         //プレイヤーのワールド座標を取得
         Vector3 pos = transform.position;
 
-        //プレイヤー画面
+        //プレイヤー3人称視点
         //矢印キーが入力されたとき
         //if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         //{
@@ -50,7 +52,7 @@ public class PlayerMove : MonoBehaviour
         //    pos.x += speed;
         //}
 
-        //横画面
+        //横画面からの俯瞰
         //矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
@@ -82,6 +84,11 @@ public class PlayerMove : MonoBehaviour
             rb.velocity = Vector3.up * jumpPower;
             isJumpFlag = true;
         }
+        else if (Input.GetKeyDown(KeyCode.Space) && isJumpFlag == true && isJumpFlagTwice == false)
+        {
+            rb.velocity = Vector3.up * jumpPower ;
+            isJumpFlagTwice = true;
+        }
 
         transform.position = new Vector3(pos.x, pos.y, pos.z);
     }
@@ -92,24 +99,38 @@ public class PlayerMove : MonoBehaviour
         if (other.gameObject.tag == "Floor" || other.gameObject.tag == "Block" || other.gameObject.tag == "BrakeBlock")
         {
             isJumpFlag = false;
+            isJumpFlagTwice = false;
             Debug.Log("aaaa");
         }
         Debug.Log(other.gameObject.tag);
 
+
+        //プレイヤーが埋まらないように跳ね返す
         Vector3 pos = transform.position;
 
         if (other.gameObject.tag == "Block"||other.gameObject.tag=="BrakeBlock")
         {
             pos.x -= Mx;
+            transform.position = new Vector3(pos.x, pos.y, pos.z);
         }
-        if(other.gameObject.tag == "Wall")
-        {
 
-            pos.x -= 0.5f;
+        if(other.gameObject.tag == "InteriorWall")
+        {
             pos.z -= Mz;
+            transform.position = new Vector3(pos.x, pos.y, pos.z);
         }
         
-        transform.position = new Vector3(pos.x, pos.y, pos.z);
+        if(other.gameObject.tag == "ThisSideWall")
+        {
+            pos.z += Mz;
+            transform.position = new Vector3(pos.x, pos.y, pos.z);
+        }
+
+        if(other.gameObject.tag == "LeftWall")
+        {
+            pos.x -= 1.0f;
+            transform.position = new Vector3(pos.x, pos.y, pos.z);
+        }
     }
 
 }

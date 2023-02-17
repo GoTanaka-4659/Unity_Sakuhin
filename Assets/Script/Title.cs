@@ -17,12 +17,14 @@ public class Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //スペースが押されたときシーンを切り替える
         if(Input.GetKeyDown(KeyCode.Space))
         {
             ChanegeScene();
         }
     }
 
+    //シーン切り替え
     public void ChanegeScene()
     {
         SceneManager.LoadScene(nextScene);

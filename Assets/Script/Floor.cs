@@ -8,10 +8,12 @@ public class Floor : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
+        //床とプレイヤーが接触しているとき
         if (other.gameObject.tag == "Player")
         {
+            //ジャンプフラグをfalseにする
             playerMove.isJumpFlag = false;
-
+            //デバッグ用
             Debug.Log("Jump=false");
         }
     }

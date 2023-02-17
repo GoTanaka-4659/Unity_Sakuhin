@@ -9,6 +9,10 @@ TagManager:
   - Wall
   - Apple
   - Block
+  - Interior
+  - InteriorWall
+  - ThisSideWall
+  - LeftWall
   layers:
   - Default
   - TransparentFX
