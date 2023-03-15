@@ -4,27 +4,45 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    public Rigidbody rb;
+    //パラメータ
     public float speed = 0.05f;
     public float jumpPower;
     public float garavity;
-    private Rigidbody rb;
+
+    //ジャンプをしているか/二回目のジャンプをしたか
     public bool isJumpFlag = false;
     public bool isJumpFlagTwice = false;
 
+    //回転しているか
+    public bool nowRotate = false;
 
-    public float Mx = 0f;
-    public float My = 0f;
-    public float Mz = 0f;
+    //カメラのワールド座標
+    public Vector3 cameraPos;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
+    private void FixedUpdate()
+    {
+
+    }
+
     void Update()
     {
         //プレイヤーのワールド座標を取得
-        Vector3 pos = transform.position;
+        cameraPos = transform.position;
+
+        //回転中ではない場合は実行 
+        if (Input.GetKey(KeyCode.LeftShift) && !nowRotate)
+        {
+            nowRotate = true;
+            //回転攻撃
+            StartCoroutine("RightMove");
+        }
+
 
         //プレイヤー3人称視点
         //矢印キーが入力されたとき
@@ -56,41 +74,40 @@ public class PlayerMove : MonoBehaviour
         //矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            //右方向に+0.1動く
-            pos.z += speed;
+            //下方向動く
+            rb.AddForce(0f, 0f, speed, ForceMode.Force);
         }
         //矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            //左方向に+0.1動く
-            pos.z -= speed;
+            //上方向動く
+            rb.AddForce(0f, 0f, -speed, ForceMode.Force);
         }
         //矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            //上方向に+0.1動く
-            pos.x -= speed;
+            //右方向動く
+            rb.AddForce(-speed, 0f, 0f, ForceMode.Force);
         }
         //矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            //下方向に+0.1動く
-            pos.x += speed;
+            //左方向動く
+            rb.AddForce(speed, 0f, 0f, ForceMode.Force);
         }
 
         //スペースを押した時ジャンプ
         if (Input.GetKeyDown(KeyCode.Space) && isJumpFlag == false)
         {
-            rb.velocity = Vector3.up * jumpPower;
+            //rb.AddForce(0f, 28.0f, 0f, ForceMode.Impulse);
+            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
             isJumpFlag = true;
         }
         else if (Input.GetKeyDown(KeyCode.Space) && isJumpFlag == true && isJumpFlagTwice == false)
         {
-            rb.velocity = Vector3.up * jumpPower ;
+            rb.AddForce(0f, 28.0f, 0f, ForceMode.Impulse);
             isJumpFlagTwice = true;
         }
-
-        transform.position = new Vector3(pos.x, pos.y, pos.z);
     }
 
     void OnTriggerEnter(Collider other)
@@ -100,39 +117,21 @@ public class PlayerMove : MonoBehaviour
         {
             isJumpFlag = false;
             isJumpFlagTwice = false;
-            Debug.Log("aaaa");
+            Debug.Log("jumpFlagOff");
         }
         Debug.Log(other.gameObject.tag);
-
-
-        //プレイヤーが埋まらないように跳ね返す
-        Vector3 pos = transform.position;
-
-        if (other.gameObject.tag == "Block"||other.gameObject.tag=="BrakeBlock")
-        {
-            pos.x -= Mx;
-            transform.position = new Vector3(pos.x, pos.y, pos.z);
-        }
-
-        if(other.gameObject.tag == "InteriorWall")
-        {
-            pos.z -= Mz;
-            transform.position = new Vector3(pos.x, pos.y, pos.z);
-        }
-        
-        if(other.gameObject.tag == "ThisSideWall")
-        {
-            pos.z += Mz;
-            transform.position = new Vector3(pos.x, pos.y, pos.z);
-        }
-
-        if(other.gameObject.tag == "LeftWall")
-        {
-            pos.x -= 1.0f;
-            transform.position = new Vector3(pos.x, pos.y, pos.z);
-        }
     }
 
+    //右に回転して攻撃
+    IEnumerator RightMove()
+    {
+        for (int turn = 0; turn < 360; turn++)
+        {
+            transform.Rotate(0, 5, 0);
+            yield return new WaitForSeconds(0.001f);
+        }
+        nowRotate = false;
+    }
 }
 
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class BrakeBlock : MonoBehaviour
 {
     public GameManager gameManager;
+    public PlayerMove playerMove;
     [SerializeField]
     [Tooltip("発生させるエフェクト（パーティクル）")]
     private ParticleSystem particle;
@@ -27,21 +28,17 @@ public class BrakeBlock : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        
+        if (playerMove.nowRotate == true)
         {
             //プレイヤーが回転攻撃（予定）を当てたとき
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (other.gameObject.tag == "Player")
             {
                 //カウント増加&壊せるブロックオブジェクトの破壊
                 gameManager.BrakeBlockCount();
                 Destroy(gameObject);
-                CreateParticle(other);
-
-                //デバッグ用
-                Debug.Log("LHit");
+                CreateParticle(other);;
             }
-            //デバッグ用
-            Debug.Log("Hit");
         }
     }
 

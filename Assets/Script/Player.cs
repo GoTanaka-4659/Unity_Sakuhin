@@ -13,9 +13,9 @@ public class Player : MonoBehaviour
     {
         if (Hp == 0)
         {
-           // Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
-        
+            Debug.Log(this.Hp);
     }
 
     /// <summary>
@@ -25,4 +25,6 @@ public class Player : MonoBehaviour
     {
         remainingLives += 1;
     }
+
+  
 }
