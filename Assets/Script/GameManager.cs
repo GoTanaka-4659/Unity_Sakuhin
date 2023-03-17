@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Screen.SetResolution(1920, 1080, false);//1920x1080のウィンドウモード
-        //Application.targetFrameRate = 60;
         appleCount = 0;
         Hpcount = 3;
         brakeCount = 0;
@@ -35,7 +33,7 @@ public class GameManager : MonoBehaviour
         //プレイヤーが死んだときゲームオーバー画面に移動
         if (player.Hp <= 0)
         {
-           // ChanegeScene();
+           ChanegeScene();
         }
         
         //リンゴが100個集まった時に残機を1増やす

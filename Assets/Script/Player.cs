@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
     public int Hp = 3;
     //残機
     public int remainingLives = 1;
+    //ダメージを受けたとき
+    public bool damageFlag = false;
+    //無敵時間
+    public int invincibleTime = 0;
 
     void Update()
     {
@@ -15,7 +19,20 @@ public class Player : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-            Debug.Log(this.Hp);
+        Debug.Log(this.Hp);
+
+        if (damageFlag == true)
+        {
+            this.Hp = this.Hp;
+
+            invincibleTime++;
+        }
+
+        if(invincibleTime==1000)
+        {
+            damageFlag = false;
+            invincibleTime = 0;
+        }
     }
 
     /// <summary>
@@ -25,6 +42,4 @@ public class Player : MonoBehaviour
     {
         remainingLives += 1;
     }
-
-  
 }

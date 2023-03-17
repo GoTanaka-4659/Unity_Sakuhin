@@ -39,8 +39,7 @@ public class Poison : MonoBehaviour
             //プレイヤーのHPを減らす
             player.Hp -= 1;
             gameManager.SubHpUI();
-            //デバッグ用
-            Debug.Log("PosionHit");
+            player.damageFlag = true;
         }
     }
 

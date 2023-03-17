@@ -5,15 +5,40 @@ using UnityEngine;
 public class Apple : MonoBehaviour
 {
     public GameManager gameManager;
+    public PlayerMove playerMove;
+    bool flyFlag = false;
+
+    float moveX = 0f;
+    float moveY = 0f;
+    float moveZ = 0f;
 
     //プレイヤーとリンゴが接触したとき
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-            //カウント増加&リンゴオブジェクトの破壊
-            gameManager.AddAppleCount();
-            Destroy(gameObject);
+            if (playerMove.nowRotate == false)
+            {
+                //カウント増加&リンゴオブジェクトの破壊
+                gameManager.AddAppleCount();
+                Destroy(gameObject);
+            }
+            else if(playerMove.nowRotate==true)
+            {
+                flyFlag = true;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if(flyFlag==false)
+        {
+            transform.Translate(new Vector3(0, 0, 10));
+        }
+        else if(flyFlag==true)
+        {
+
         }
     }
 

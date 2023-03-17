@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //右回転
     IEnumerator RightMove()
     {
         for (int turn = 0; turn < 180; turn++)
@@ -53,6 +54,7 @@ public class Enemy : MonoBehaviour
                 //プレイヤーのHPを減らす
                 player.Hp -= 1;
                 gameManager.SubHpUI();
+                player.damageFlag = true;
             }
         }
     }

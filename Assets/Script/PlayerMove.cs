@@ -43,33 +43,6 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine("RightMove");
         }
 
-
-        //プレイヤー3人称視点
-        //矢印キーが入力されたとき
-        //if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        //{
-        //    右方向に+0.1動く
-        //    pos.z += speed;
-        //}
-        //矢印キーが入力されたとき
-        //if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        //{
-        //    左方向に+0.1動く
-        //    pos.z -= speed;
-        //}
-        //矢印キーが入力されたとき
-        //if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        //{
-        //    上方向に+0.1動く
-        //    pos.x -= speed;
-        //}
-        //矢印キーが入力されたとき
-        //if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        //{
-        //    下方向に+0.1動く
-        //    pos.x += speed;
-        //}
-
         //横画面からの俯瞰
         //矢印キーが入力されたとき
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
@@ -105,7 +78,8 @@ public class PlayerMove : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && isJumpFlag == true && isJumpFlagTwice == false)
         {
-            rb.AddForce(0f, 28.0f, 0f, ForceMode.Impulse);
+            //rb.AddForce(0f, 28.0f, 0f, ForceMode.Impulse);
+            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
             isJumpFlagTwice = true;
         }
     }
