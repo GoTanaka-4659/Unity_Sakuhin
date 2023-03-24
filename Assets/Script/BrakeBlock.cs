@@ -37,7 +37,7 @@ public class BrakeBlock : MonoBehaviour
                 //カウント増加&壊せるブロックオブジェクトの破壊
                 gameManager.BrakeBlockCount();
                 Destroy(gameObject);
-                CreateParticle(other);;
+                CreateParticle(other);
             }
         }
     }
